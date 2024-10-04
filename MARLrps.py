@@ -89,9 +89,36 @@ class RockPaperScissorsEnv:
     def __init__(self, agents):
         self.agents = agents
     
-    def play_round(self):
-        actions = {agent.name: agent.act() for agent in self.agents}
-        print(f"Actions: {actions}")
+    
+ def play_round(self):
+     actions = {agent.name: agent.act() for       agent in self.agents}
+    print(f"Actions: {actions}")
+
+    rewards = {agent.name: 0 for agent in self.agents}
+    
+    # Determine winners and assign rewards
+    for agent in self.agents:
+        action = actions[agent.name]
+        for opponent in self.agents:
+            if opponent != agent:
+                opponent_action = actions[opponent.name]
+                winner = get_winner(ACTIONS[action], ACTIONS[opponent_action])
+                
+                if winner == 1:  # Agent wins
+                    rewards[agent.name] += 1
+                    # Transform the winning agent into the type of the defeated agent
+                    agent.action = opponent_action  # Transform agent into the defeated type
+                    
+                elif winner == -1:  # Opponent wins
+                    rewards[opponent.name] += 1
+
+    # Store experiences
+    for agent in self.agents:
+        action = actions[agent.name]
+        state = np.zeros((1, agent.state_size))  # Placeholder state
+        next_state = np.zeros((1, agent.state_size))  # Placeholder next state
+        done = False  # Assuming game is not done
+        agent.remember(state, action, rewards[agent.name], next_state, done)
 
         rewards = {agent.name: 0 for agent in self.agents}
         
