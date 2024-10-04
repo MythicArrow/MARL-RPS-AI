@@ -27,7 +27,7 @@ EPSILON_MIN = 0.01
 ROCK_IMAGE = pygame.image.load("rock.png")
 PAPER_IMAGE = pygame.image.load("paper.png")
 SCISSORS_IMAGE = pygame.image.load("scissors.png")
-BACKGROUND_IMAGE = pygame.image.load("background.png")
+BACKGROUND_IMAGE = pygame.image.load("rock_paper_scissors_background.png")
 
 # Set up the Pygame window
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
